@@ -1,0 +1,31 @@
+import tweepy
+import time
+
+# Set up your Twitter API keys and access tokens
+consumer_key = 'YOUR_CONSUMER_KEY'
+consumer_secret = 'YOUR_CONSUMER_SECRET'
+access_token = 'YOUR_ACCESS_TOKEN'
+access_token_secret = 'YOUR_ACCESS_TOKEN_SECRET'
+
+# Authenticate with Twitter API
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
+# Get the HTML content of the website
+response = requests.get(website)
+soup = BeautifulSoup(response.text, "html.parser")
+
+# Find all the elements that contain financial tips
+tips = soup.find_all("li")
+
+# Choose a random tip from the list
+tip = random.choice(tips).text.strip()
+
+# Post the tip on Twitter with the source website
+api.update_status(f"{tip}\nSource: websites = [ “https://www.moneycrashers.com/personal-finance-tips/”, “https://www.forbes.com/advisor/personal-finance/financial-tips/”, “https://www.nerdwallet.com/blog/finance/how-to-budget/ “https://www.moneyunder30.com/”]
+
+print("Tweet posted:", tip)
+
+# Wait for 6 hours before posting the next tip
+time.sleep(6 * 60 * 60)
