@@ -1,5 +1,5 @@
 # X-Finance-Tips
-TLDR; Overall, this script scrapes financial tips from various websites and posts them on Twitter at regular intervals, making use of the Twitter API and web scraping techniques.
+TLDR; Overall, this script scrapes financial tips from various websites and posts them on Twitter at regular intervals, making use of the Twitter API and web scraping techniques. (requires a paid developer mode on X)
 This code is a Python script that performs the following tasks:
 
 1. Imports necessary modules, including tweepy for Twitter API access, time for time-related functions, requests for making HTTP requests, BeautifulSoup for HTML parsing, and random for random tip selection.
