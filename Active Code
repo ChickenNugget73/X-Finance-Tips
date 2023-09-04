@@ -1,0 +1,76 @@
+# Import the necessary modules
+import tweepy
+import time
+import requests 
+from bs4 import BeautifulSoup
+import random
+
+
+# Set up your Twitter API keys and access tokens
+consumer_key = 'consumer_key'
+consumer_secret = 'consumer_secret'
+access_token = 'access_token'
+access_token_secret = 'access_token_secret'
+
+# Authenticate with Twitter API
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
+# Define a list of websites to scrape financial tips from
+websites = ["https://www.moneycrashers.com/personal-finance-tips/", "https://www.forbes.com/advisor/personal-finance/financial-tips/", "https://www.nerdwallet.com/blog/finance/how-to-budget/", "https://www.moneyunder30.com/"]
+
+# Loop through the websites list and get a different response for each website
+for website in websites:
+    # Get the HTML content of the website 
+    response = requests.get(website)
+    # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(response.text, "html.parser")
+    # Find all the elements that contain financial tips using a specific selector 
+    if website == "https://www.moneycrashers.com/personal-finance-tips/":
+      
+       tips = soup.select("div.tip-content")
+  
+    elif website == "https://www.forbes.com/advisor/personal-finance/financial-tips/":
+
+      tips = soup.select("div.article-body > ul > li")
+
+    elif website == "https://www.nerdwallet.com/blog/finance/how-to-budget/":
+
+      tips = soup.select("div.entry-content > ol > li")
+
+    elif website == "https://www.moneyunder30.com/":
+      tips = soup.select("div.post-content > ul > li")
+
+    else:
+      tips = soup.select("li")
+
+      # Choose a random tip from the list
+    if tips:
+      tip = random.choice(tips).text.strip()
+    # rest of your code
+else:
+    print("No tips found on this website")
+
+  # Assign the website to a variable to use it in the tweet
+    source = website
+  # Post the tip on Twitter with the source website using f-strings and curly braces 
+    try:
+      api.update_status(f"{tips}\nSource: {source}") 
+      # Print the tweet on the console for debugging purposes
+      print("Tweet posted:", tip)
+
+    finally:
+    # Your code that always executes here
+      print("The try-except-finally block is finished")
+    try: 
+        # Some code that might raise an exception except 
+        tweepy.error.TweepError 
+    finally:
+    # Your code that always executes here
+      print("The try-except-finally block is finished")
+      # Print the error message on the console for debugging purposes 
+      print("Tweet failed:", e)
+
+    # Wait for 6 hours before posting the next tip using time.sleep()
+    time.sleep(6 * 60 * 60)
